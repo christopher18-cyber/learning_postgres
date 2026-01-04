@@ -1,7 +1,9 @@
 // import "dotenv/config"
+import { averagePostsPerUser, countPostsByUser } from "./concepts/aggregation.js";
 import { createUsersTable, insertUser, fetchAllUsers, updateUserInfo, deleteInfo } from "./concepts/basic-queries.js";
 import { getPaginatedUser, getSortedUsers, getUsersWhere } from "./concepts/filtering-sorting.js";
-import { createPostsTable } from "./concepts/relationships.js";
+import { getAllUsersAndTheirPosts, getUsersWithPosts } from "./concepts/joins.js";
+import { createPostsTable, insertNewPost } from "./concepts/relationships.js";
 async function testBasicQueries() {
     try {
         // await insertUser("chris", "chris@gmail.com")
@@ -28,8 +30,25 @@ async function testBasicQueries() {
 }
 
 async function testAllQueries() {
-    await testRealtionshipQueries()
+    // await testRealtionshipQueries()
     // testBasicQueries()
+    // await testJoinQueries()
+    await testAggregateQueries()
+}
+
+async function testJoinQueries() {
+    try {
+        // const usersWithPost = await getUsersWithPosts()
+        // console.log(usersWithPost);
+
+        const allUsersWithAllPosts = await getAllUsersAndTheirPosts()
+        console.log(allUsersWithAllPosts);
+
+
+    }
+    catch (err) {
+        console.error("Error", err);
+    }
 }
 
 
@@ -55,7 +74,21 @@ async function testfilterAndSortQueries() {
 
 async function testRealtionshipQueries() {
     try {
-        await createPostsTable()
+        // await createPostsTable()
+        await insertNewPost("Second post", "This is my second post", 1)
+    }
+    catch (err) {
+        console.error("Error", err);
+    }
+}
+
+async function testAggregateQueries() {
+    try {
+        // const postCount = await countPostsByUser()
+        // console.log(postCount);
+
+        const averagePostsPerUserInfo = await averagePostsPerUser()
+        console.log(averagePostsPerUserInfo);
     }
     catch (err) {
         console.error("Error", err);

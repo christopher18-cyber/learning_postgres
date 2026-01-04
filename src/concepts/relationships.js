@@ -21,3 +21,18 @@ export async function createPostsTable() {
         console.error("Error", err);
     }
 }
+export async function insertNewPost(title, content, user_id) {
+    const insertPostQuery = `
+    INSERT INTO posts (title,content, user_id)
+    VALUES ($1,$2,$3)
+    RETURNING *
+    `
+
+    try {
+        const result = await db.query(insertPostQuery, [title, content, user_id])
+        return result.rows[0]
+    }
+    catch (err) {
+        console.error("Error", err);
+    }
+}
